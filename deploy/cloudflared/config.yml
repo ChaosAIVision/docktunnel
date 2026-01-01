@@ -1,0 +1,22 @@
+tunnel: YOUR_TUNNEL_ID
+credentials-file: /etc/cloudflared/credentials.json
+
+ingress:
+  # SSH access via Cloudflare Tunnel
+  - hostname: ssh.your-domain.com
+    service: tcp://dev:22
+  
+  # Jupyter Lab
+  - hostname: jupyter.your-domain.com
+    service: http://dev:8888
+  
+  # TensorBoard
+  - hostname: tensorboard.your-domain.com
+    service: http://dev:6006
+  
+  # General web server
+  - hostname: app.your-domain.com
+    service: http://dev:8000
+  
+  # Catch-all rule (required)
+  - service: http_status:404

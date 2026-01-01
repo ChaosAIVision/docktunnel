@@ -1,0 +1,53 @@
+# Environment files
+.env
+
+# Cloudflare credentials
+deploy/cloudflared/credentials.json
+deploy/cloudflared/*.pem
+
+# SSH keys
+*.pem
+*.key
+id_rsa*
+id_ed25519*
+
+# Docker volumes
+volumes/
+
+# Logs
+*.log
+logs/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.venv/
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Models and datasets (too large)
+models/
+datasets/
+*.h5
+*.pt
+*.pth
+*.ckpt
+*.safetensors

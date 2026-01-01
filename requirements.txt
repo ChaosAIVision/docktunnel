@@ -1,0 +1,60 @@
+# Python Dependencies Template
+# Uncomment and modify based on your needs
+
+# ============================================
+# Deep Learning Frameworks
+# ============================================
+
+# PyTorch with CUDA 12.1 support
+# torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121
+
+# TensorFlow with CUDA support
+# tensorflow[and-cuda]
+
+# JAX with CUDA support
+# jax[cuda12_pip] -f https://storage.googleapis.com/jax-releases/jax_cuda_releases.html
+
+# ============================================
+# Data Science & Visualization
+# ============================================
+# pandas
+# scipy
+# scikit-learn
+# matplotlib
+# seaborn
+# plotly
+
+# ============================================
+# Computer Vision
+# ============================================
+# opencv-python
+# pillow
+# albumentations
+# timm
+
+# ============================================
+# NLP & LLMs
+# ============================================
+# transformers
+# datasets
+# tokenizers
+# sentencepiece
+# accelerate
+# bitsandbytes
+
+# ============================================
+# Utilities
+# ============================================
+# tqdm
+# wandb
+# tensorboard
+# mlflow
+
+# ============================================
+# Development Tools
+# ============================================
+# black
+# flake8
+# pytest
+# ipdb
+# jupyter

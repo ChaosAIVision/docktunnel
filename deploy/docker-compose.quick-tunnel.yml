@@ -1,0 +1,53 @@
+version: '3.8'
+
+# Quick Tunnel configuration - multiple services exposed
+# This creates separate tunnels for each service
+
+services:
+  # Tunnel for Jupyter Lab
+  tunnel-jupyter:
+    image: cloudflare/cloudflared:latest
+    container_name: tunnel-jupyter
+    command: tunnel --url http://dev:8888
+    restart: unless-stopped
+    networks:
+      - vastai-network
+    depends_on:
+      - dev
+
+  # Tunnel for SSH (TCP)
+  tunnel-ssh:
+    image: cloudflare/cloudflared:latest
+    container_name: tunnel-ssh
+    command: tunnel --url tcp://dev:22
+    restart: unless-stopped
+    networks:
+      - vastai-network
+    depends_on:
+      - dev
+
+  # Tunnel for TensorBoard
+  tunnel-tensorboard:
+    image: cloudflare/cloudflared:latest
+    container_name: tunnel-tensorboard
+    command: tunnel --url http://dev:6006
+    restart: unless-stopped
+    networks:
+      - vastai-network
+    depends_on:
+      - dev
+
+  # Tunnel for general web app
+  tunnel-webapp:
+    image: cloudflare/cloudflared:latest
+    container_name: tunnel-webapp
+    command: tunnel --url http://dev:8000
+    restart: unless-stopped
+    networks:
+      - vastai-network
+    depends_on:
+      - dev
+
+networks:
+  vastai-network:
+    external: true

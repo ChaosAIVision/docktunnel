@@ -1,0 +1,101 @@
+version: '3.8'
+
+services:
+  # Main development container with GPU, SSH, and development tools
+  dev:
+    build:
+      context: ..
+      dockerfile: deploy/Dockerfile
+    container_name: docktunnel-dev
+    hostname: docktunnel-dev
+
+    # GPU configuration
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [ gpu, compute, utility ]
+
+    # Port mappings
+    ports:
+      - "2222:22" # SSH for VSCode/Cursor
+      - "8886:8888" # Jupyter Lab
+      - "6006:6006" # TensorBoard
+      - "6785:8000" # General purpose web server
+
+    # Volumes for persistent data
+    volumes:
+      - workspace:/workspace
+      - models:/models
+      - datasets:/datasets
+      - ../data:/root/data # Local folder mount for easy access
+      # Uncomment to mount SSH keys
+      # - ~/.ssh:/root/.ssh:ro
+
+      # Environment variables
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
+      - NVIDIA_DRIVER_CAPABILITIES=compute,utility
+      - JUPYTER_ENABLE_LAB=yes
+      - GRANT_SUDO=yes
+
+    # Keep container running
+    stdin_open: true
+    tty: true
+
+    # Restart policy
+    restart: unless-stopped
+
+    networks:
+      - docktunnel-network
+
+  # Cloudflare Tunnel for secure public access
+  # Option 1: Quick Tunnel (default - no setup required)
+  cloudflared-quick:
+    image: cloudflare/cloudflared:latest
+    container_name: docktunnel-tunnel-quick
+
+    # Quick tunnel for SSH - generates random URL for VSCode/Cursor
+    command: tunnel --url tcp://dev:22
+
+    restart: unless-stopped
+
+    networks:
+      - docktunnel-network
+
+    depends_on:
+      - dev
+    # Get tunnel URL: docker-compose logs cloudflared-quick | grep trycloudflare.com
+
+    # Option 2: Named Tunnel (advanced - requires Cloudflare account)
+    # Uncomment this service and comment out cloudflared-quick above
+    # cloudflared:
+    #   image: cloudflare/cloudflared:latest
+    #   container_name: docktunnel-tunnel
+    #   
+    #   command: tunnel --config /etc/cloudflared/config.yml run
+    #   
+    #   volumes:
+    #     - ./cloudflared:/etc/cloudflared:ro
+    #   
+    #   restart: unless-stopped
+    #   
+    #   networks:
+    #     - docktunnel-network
+    #   
+    #   depends_on:
+    #     - dev
+
+networks:
+  docktunnel-network:
+    driver: bridge
+
+volumes:
+  workspace:
+    driver: local
+  models:
+    driver: local
+  datasets:
+    driver: local
