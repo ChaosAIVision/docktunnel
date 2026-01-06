@@ -1,0 +1,7 @@
+# SSH Public Keys Configuration
+# Add one or more public SSH keys below
+ssh_keys:
+  - "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHJGIXA/c+NTf0PflgN0/l9TbrNxLqPKhTNJ3WvC2PUA truongnn20022003@gmail.com"
+  # Add more keys as needed:
+  # - "ssh-rsa AAAAB3Nza... user2@example.com"
+  # - "ssh-ed25519 AAAAC3Nza... user3@host"
