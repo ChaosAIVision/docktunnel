@@ -29,8 +29,8 @@ RUN apt-get update && apt-get install -y \
     bzip2 \
     && rm -rf /var/lib/apt/lists/*
 
-# Install Miniconda
-RUN wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O /tmp/miniconda.sh && \
+# Install Miniconda (ARM64 version)
+RUN wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-aarch64.sh -O /tmp/miniconda.sh && \
     bash /tmp/miniconda.sh -b -p /opt/conda && \
     rm /tmp/miniconda.sh
 
