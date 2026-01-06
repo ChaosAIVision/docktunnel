@@ -31,7 +31,8 @@ services:
       - models:/models
       - datasets:/datasets
       - ../data:/root/data # Local folder mount for easy access
-      # Uncomment to mount SSH keys
+      - ./ssh-keys.yml:/root/.ssh/ssh-keys.yml:ro # SSH keys config
+      # Uncomment to mount SSH keys directly
       # - ~/.ssh:/root/.ssh:ro
 
       # Environment variables
